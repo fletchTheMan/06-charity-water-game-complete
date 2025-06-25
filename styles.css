@@ -60,17 +60,6 @@ body {
     z-index: 2;
 }
 
-#water-fill {
-    position: absolute;
-    bottom: 24px;
-    left: 144px;
-    width: 62px;
-    height: 0;
-    background: #2E9DF7;
-    border-radius: 0 0 36px 36px;
-    z-index: 1;
-    transition: height 0.3s;
-}
 
 .water-drop {
     position: absolute;
@@ -87,4 +76,20 @@ body {
     font-size: 1.2em;
     margin-top: 10px;
     color: #159A48;
+}
+
+.splash-effect {
+    position: absolute;
+    width: 60px; /* Make splash bigger */
+    height: 30px; /* Make splash bigger */
+    background: #8BD1CB;
+    border-radius: 50% 50% 60% 60%;
+    opacity: 0.7;
+    z-index: 10;
+    animation: splash 0.4s linear;
+}
+
+@keyframes splash {
+    0% { transform: scale(0.5); opacity: 1; }
+    100% { transform: scale(2); opacity: 0; } /* Make splash grow larger */
 }

@@ -4,7 +4,6 @@ console.log('JavaScript file is linked correctly.');
 // Select elements
 const gameArea = document.getElementById('game-area');
 const bucket = document.getElementById('bucket');
-const waterFill = document.getElementById('water-fill');
 const waterCountSpan = document.getElementById('water-count');
 
 // Game variables
@@ -12,7 +11,6 @@ let bucketX = 140; // starting left position
 const bucketWidth = 70;
 const gameWidth = 350;
 let waterCount = 0;
-let waterFillHeight = 0;
 let bucketDirection = 1; // 1 for right, -1 for left
 let bucketSpeed = 2; // pixels per frame, will change with difficulty
 let dropAreaHeight = 120; // will change with difficulty
@@ -55,7 +53,6 @@ function moveBucketAutomatically() {
         bucketDirection = -1;
     }
     bucket.style.left = `${bucketX}px`;
-    waterFill.style.left = `${bucketX + 4}px`;
     // Call this function again on the next animation frame
     requestAnimationFrame(moveBucketAutomatically);
 }
@@ -104,9 +101,17 @@ function createWaterDrop(x) {
                 // Drop landed in bucket
                 waterCount++;
                 waterCountSpan.textContent = waterCount;
-                // Increase water fill height
-                waterFillHeight = Math.min(46, waterFillHeight + 6);
-                waterFill.style.height = `${waterFillHeight}px`;
+                // No water fill effect anymore
+
+                // Create a bigger splash effect
+                const splash = document.createElement('div');
+                splash.className = 'splash-effect';
+                // Position splash at the center of the bucket
+                splash.style.left = `${bucketX + bucketWidth / 2 - 30}px`; // Center bigger splash
+                splash.style.top = `${bucketTop - 15}px`;
+                gameArea.appendChild(splash);
+                // Remove splash after animation
+                setTimeout(() => splash.remove(), 400);
             }
             // Remove drop
             clearInterval(dropInterval);
