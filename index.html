@@ -14,13 +14,22 @@
         <img src="img/cw_logo.png" alt="Charity: water logo" class="img-fluid col col-lg-1 col-md-2 col-sm-3 ml-3" id="cw-logo">
       </div> 
     </section>
-    <!-- Game Area -->
-    <div id="game-area">
-        <div id="drop-area-highlight"></div>
-        <div id="water-fill"></div>
-        <div id="bucket"></div>
+    <!-- Difficulty Selector -->
+    <div id="difficulty-selector" class="mb-3 text-center">
+      <label for="difficulty" class="form-label">Select Difficulty:</label>
+      <select id="difficulty" class="form-select" style="width: 200px; display: inline-block;">
+        <option value="easy">Easy</option>
+        <option value="medium">Medium</option>
+        <option value="hard">Hard</option>
+      </select>
     </div>
-    <div id="score">Water Collected: <span id="water-count">0</span></div>
+    <!-- Game Area -->
+    <div id="game-area" class="text-center">
+        <div id="drop-area-highlight" class="d-inline-block"></div>
+        <div id="water-fill" class="d-inline-block"></div>
+        <div id="bucket" class="d-inline-block"></div>
+    </div>
+    <div id="score" class="text-center mt-3">Water Collected: <span id="water-count">0</span></div>
     <script src="script.js"></script>
 </body>
 </html>

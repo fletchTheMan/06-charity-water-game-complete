@@ -14,7 +14,33 @@ const gameWidth = 350;
 let waterCount = 0;
 let waterFillHeight = 0;
 let bucketDirection = 1; // 1 for right, -1 for left
-const bucketSpeed = 2; // pixels per frame, adjust for challenge
+let bucketSpeed = 2; // pixels per frame, will change with difficulty
+let dropAreaHeight = 120; // will change with difficulty
+
+// Select difficulty dropdown
+const difficultySelect = document.getElementById('difficulty');
+
+difficultySelect.addEventListener('change', function() {
+    // Change game settings based on selected difficulty
+    const value = difficultySelect.value;
+    if (value === 'easy') {
+        bucketSpeed = 2;
+        dropAreaHeight = 120;
+    } else if (value === 'medium') {
+        bucketSpeed = 4;
+        dropAreaHeight = 80;
+    } else if (value === 'hard') {
+        bucketSpeed = 6;
+        dropAreaHeight = 50;
+    }
+    // Update drop area highlight height
+    const dropArea = document.getElementById('drop-area-highlight');
+    dropArea.style.height = `${dropAreaHeight}px`;
+});
+
+// Set initial drop area height
+const dropArea = document.getElementById('drop-area-highlight');
+dropArea.style.height = `${dropAreaHeight}px`;
 
 // Move bucket automatically
 function moveBucketAutomatically() {
@@ -37,12 +63,12 @@ function moveBucketAutomatically() {
 moveBucketAutomatically();
 
 // Drop water on click/tap at the top area
-// Only allow drops in the top 120px of the game area
+// Only allow drops in the top dropAreaHeight px of the game area
 function handleDrop(event) {
     // Get click/tap position relative to game area
     const rect = gameArea.getBoundingClientRect();
     const y = event.touches ? event.touches[0].clientY : event.clientY;
-    if (y - rect.top > 120) {
+    if (y - rect.top > dropAreaHeight) {
         // Only allow drops from the top area
         return;
     }
@@ -64,8 +90,9 @@ function createWaterDrop(x) {
 
     // Animate the drop falling
     let dropY = 0;
+    // Increase the speed of falling by increasing the value added to dropY
     const dropInterval = setInterval(() => {
-        dropY += 6; // speed of falling
+        dropY += 9; 
         drop.style.top = `${dropY}px`;
 
         // Check if drop reached the bucket
