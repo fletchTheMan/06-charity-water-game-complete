@@ -6,6 +6,7 @@
     <title>Charity Water Game</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.cdnfonts.com/css/proxima-nova-2" rel="stylesheet">
 </head>
 <body>
     <section class="container text-center">
@@ -23,12 +24,24 @@
         <option value="hard">Hard</option>
       </select>
     </div>
-    <!-- Game Area -->
-    <div id="game-area" class="text-center">
+    <!-- Start Button and Timer -->
+    <div id="start-area" class="text-center mt-4">
+      <button id="start-btn" class="btn btn-primary">Start Game</button>
+    </div>
+    <div id="timer-area" class="text-center mt-3" style="display:none;">
+      <span id="timer">30</span> seconds left
+    </div>
+    <!-- Game Area (hidden until game starts) -->
+    <div id="game-area" class="text-center" style="display:none;">
         <div id="drop-area-highlight" class="d-inline-block"></div>
         <div id="bucket" class="d-inline-block"></div>
     </div>
-    <div id="score" class="text-center mt-3">Water Collected: <span id="water-count">0</span></div>
+    <div id="score" class="text-center mt-3" style="display:none;">Water Collected: <span id="water-count">0</span></div>
+    <div id="game-over" class="text-center mt-5" style="display:none;"></div>
     <script src="script.js"></script>
+    <footer class="text-center mt-5 fixed-bottom" style="font-family: 'Proxima Nova', Avenir, Georgia, serif; font-size: 1.1em; background: #f8fafc; padding: 18px 0; border-top: 2px solid #2E9DF7;">
+      <a href="https://www.charitywater.org/" target="_blank" rel="noopener" style="color: #2E9DF7; text-decoration: underline; margin-right: 18px;">Charity: water</a>
+      <a href="https://www.charitywater.org/donate" target="_blank" rel="noopener" style="color: #FFC907; text-decoration: underline;">Donate</a>
+    </footer>
 </body>
 </html>

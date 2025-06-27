@@ -59,9 +59,72 @@ function moveBucketAutomatically() {
 // Start moving the bucket automatically
 moveBucketAutomatically();
 
+// Select new elements for start, timer, and game over
+const startBtn = document.getElementById('start-btn');
+const startArea = document.getElementById('start-area');
+const timerArea = document.getElementById('timer-area');
+const timerSpan = document.getElementById('timer');
+const scoreDiv = document.getElementById('score');
+const gameOverDiv = document.getElementById('game-over');
+
+let timer = 30; // seconds
+let timerInterval = null;
+let gameActive = false;
+
+// Hide game area and score at first
+const gameAreaDiv = document.getElementById('game-area');
+gameAreaDiv.style.display = 'none';
+scoreDiv.style.display = 'none';
+timerArea.style.display = 'none';
+gameOverDiv.style.display = 'none';
+
+// Start button event
+startBtn.addEventListener('click', function() {
+    // Reset game state
+    waterCount = 0;
+    bucketX = 140;
+    bucketDirection = 1;
+    timer = 30;
+    timerSpan.textContent = timer;
+    waterCountSpan.textContent = waterCount;
+    // Hide start, show game
+    startArea.style.display = 'none';
+    gameAreaDiv.style.display = '';
+    scoreDiv.style.display = '';
+    timerArea.style.display = '';
+    gameOverDiv.style.display = 'none';
+    gameActive = true;
+    // Start timer
+    timerInterval = setInterval(() => {
+        timer--;
+        timerSpan.textContent = timer;
+        if (timer <= 0) {
+            endGame();
+        }
+    }, 1000);
+});
+
+function endGame() {
+    gameActive = false;
+    clearInterval(timerInterval);
+    // Hide game area and score
+    gameAreaDiv.style.display = 'none';
+    scoreDiv.style.display = 'none';
+    timerArea.style.display = 'none';
+    // Show game over screen
+    gameOverDiv.style.display = '';
+    gameOverDiv.innerHTML = `<h2>Game Over!</h2><p>You collected <strong>${waterCount}</strong> drops!</p><button id="restart-btn" class="btn btn-primary mt-3">Play Again</button>`;
+    // Add restart button event
+    document.getElementById('restart-btn').onclick = function() {
+        gameOverDiv.style.display = 'none';
+        startArea.style.display = '';
+    };
+}
+
 // Drop water on click/tap at the top area
 // Only allow drops in the top dropAreaHeight px of the game area
 function handleDrop(event) {
+    if (!gameActive) return;
     // Get click/tap position relative to game area
     const rect = gameArea.getBoundingClientRect();
     const y = event.touches ? event.touches[0].clientY : event.clientY;
@@ -103,6 +166,10 @@ function createWaterDrop(x) {
                 waterCountSpan.textContent = waterCount;
                 // No water fill effect anymore
 
+                // Play splash sound
+                splashAudio.currentTime = 0; // rewind to start
+                splashAudio.play();
+
                 // Create a bigger splash effect
                 const splash = document.createElement('div');
                 splash.className = 'splash-effect';
@@ -119,6 +186,9 @@ function createWaterDrop(x) {
         }
     }, 16); // about 60 frames per second
 }
+
+// Create audio element for splash sound
+const splashAudio = new Audio('sound/water-splash-80537.mp3');
 
 // Add comments to help beginners
 // - Arrow keys move the bucket
